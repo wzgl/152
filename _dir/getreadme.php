@@ -100,7 +100,7 @@ function getFileInfo($file,$dir,$flag = 0)
 		$size = filesize($f["path"]);
 		//file_put_contents("/var/www/html/_dir/123.log","1111>>>>>>size::".$size."\n",8);
 		/*如果升级包小于等于100M才解压 chenqin 2018-10-16*/
-		if($size != FALSE && $size <= 104857600)
+		if($size != FALSE && $size <= 262144000)
 		{
 			$f["desc"] = getreadme($f["path"],$flag);
 			//file_put_contents("/var/www/html/_dir/123.log","1111>>>>>>desc::".$f["desc"]."\n",8);

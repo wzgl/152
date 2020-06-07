@@ -254,7 +254,7 @@ $bIsAsc = $bIsAsc ? 0 : 1;
 
     <tr>
         <td valign="top"><img src="/icons/back.gif" alt="[DIR]"></td>
-        <td><a href="<?php echo $dirstart . substr($dir, 0, strrpos($dir, "/")); ?>">Parent Directory</a>
+        <td><a href="<?php echo $dirstart . substr($dir, 0, strrpos($dir, "/")) . '/'; ?>">Parent Directory</a>
         </td>
         <td>&nbsp;</td>
         <td align="right"> -</td>
