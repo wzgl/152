@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+    <title>升级包文件冲突检查</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        table{margin:auto;border-collapse:collapse;border-spacing:0;border-left:1px solid #888;border-top:1px solid #888;background:#f5f5dc;}
+        th,td{border-right:1px solid #888;border-bottom:1px solid #888;padding:5px 15px;}
+        th{font-weight:bold;background:#ccc;}
+        #pane_div{position: relative;}
+        #left_div{width: 43%; float: left;position: relative; margin-right: 2.5%;}
+        #right_div{width: 53%;float:left;position: relative;margin-left: 0.5%;}
+        .desc{width: 20px;line-height: 24px;float:left;color:green;}
+        #log_list{width:95%;float:left;position: absolute;}
+        #check_file{width:95%;float:left;position: absolute;}
+        #check_result{width:95%;float:left;position: absolute;}
+        #line{width:1px;float: left;position: absolute;}
+        #search{position: absolute;width:100px;height:40px;margin:auto;}
+        .foot {margin-top: 670px;position:absolute;float: bottom;width:43%;}
+    </style>
+    <script>
+        window.onload = function(){
+            let oLeftDiv = document.getElementById('left_div');
+            let oLogArea = document.getElementById('log_list');
+            let oFileArea = document.getElementById('check_file');
+            let oCheckResult = document.getElementById('check_result');
+            let oLine = document.getElementById('line');
+            let oSearch = document.getElementById('search');
+            oLogArea.style.height = oCheckResult.style.height = 650+'px';
+            oFileArea.style.height = 180+'px';
+            oLine.style.height = 860+'px';
+            oLine.style.marginLeft = oLeftDiv.offsetWidth + 10 + 'px';
+            oSearch.style.marginTop = (670)+'px';
+            oSearch.style.marginLeft = oLogArea.offsetWidth - 700 + 'px';
+        };
+        
+        window.onresize = function(){
+            let oLeftDiv = document.getElementById('left_div');
+            let oLogArea = document.getElementById('log_list');
+            let oSearch = document.getElementById('search');
+            let oLine = document.getElementById('line');
+            oLine.style.marginLeft = oLeftDiv.offsetWidth + 10 + 'px';
+            oSearch.style.marginLeft = oLogArea.offsetWidth - 700 + 'px';
+        }
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <td><h2>功能说明：</h2></td>
+        <td>查询某个包与现有升级包是否存在文件冲突</td>
+    </tr>
+    <tr>
+        <td rowspan="2"><h2>操作说明：</h2></td>
+        <td>步骤1）在左边第一个文本框粘贴升级包列表</td>
+    </tr>
+    <tr>
+        <td>步骤2）在左边边第二个文本框粘贴需要检查的升级包</td>
+    </tr>
+</table>
+<hr/>
+<div id="pane_div">
+    <div id="left_div">
+        <div class="desc">请将升级包列表复制到下面的文本框中</div>
+        <textarea id="log_list" placeholder="请输入带.exe或者.exe.rar结尾的升级包名称进行查询"></textarea>
+    </div>
+    <hr id="line"/>
+    <div id="right_div">
+        <div class="desc">检查结果</div>
+        <input type="button" value="开始对比" id="search" onclick="check()" style="cursor: pointer"/>
+        <textarea id="check_result"></textarea>
+    </div>
+    <div class="foot">
+        <div class="desc">需要检查的升级包</div>
+        <textarea id="check_file" placeholder="请输入带.exe或者.exe.rar结尾的升级包名称进行查询"></textarea>
+    </div>
+</div>
+<script>
+    function check() {
+        let packageList = document.getElementById('log_list').value;
+        let checkItem = document.getElementById('check_file').value;
+        ajaxPost('ConflictCheck.php',"packageList="+packageList+"&checkItem="+checkItem);
+        console.log(packageList);
+    }
+
+    function showCheckResult(data) {
+        let checkResultObj = document.getElementById('check_result');
+        checkResultObj.value = data;
+    }
+
+    function ajaxPost(url, data) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        // 添加http头，发送信息至服务器时内容编码类型
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {
+                let result = JSON.parse(xhr.responseText);
+                if(parseInt(result.code) === 1) {
+                    showCheckResult(result.data);
+                } else {
+                    alert(result.msg);
+                    return false;
+                }
+            }
+        };
+        xhr.send(data);
+    }
+</script>
+</body>
+</html>

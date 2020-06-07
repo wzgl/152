@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+    <title>升级包文件列表</title>
+    <script type="text/javascript">
+        //导入文件事件
+        function importFile(bFromFile)
+        {
+            var httpRequest = getXmlHttpRequest();
+            function process_func()
+            {
+                if(httpRequest.readyState == 4 && httpRequest.status == 200)
+                {
+                    switch(httpRequest.responseText)
+                    {
+                        case '0':
+                            alert('保存成功');
+                            break;
+                        case '1':
+                            alert('文件写入出错');
+                            break;
+                        case '2':
+                            alert('通信出错');
+                            break;
+                        default:
+                            //alert(httpRequest.responseText);
+                            document.getElementById('file_list').innerText = httpRequest.responseText;
+                            break;
+                    }
+                }
+            }
+            httpRequest.open("post","getPatchFileList.php",true);
+            httpRequest.setRequestHeader("content-type","application/x-www-form-urlencoded");
+            httpRequest.onreadystatechange = process_func;
+
+            if(bFromFile)
+            {
+                var selectedFile = document.getElementById("files").files[0];//获取读取的File对象
+                var name = selectedFile.name;//读取选中文件的文件名
+                var size = selectedFile.size;//读取选中文件的大小
+                //console.log("文件名:" + name + "大小：" + size);
+                var reader = new FileReader();//这里是核心！！！读取操作就是由它完成的。
+                reader.readAsText(selectedFile,"gb2312");//读取文件的内容
+
+                reader.onload = function () {
+                    //console.log(this.result);//当读取完成之后会回调这个函数，然后此时文件的内容存储到了result中。直接操作即可。
+                    document.getElementById('log_list').innerText = this.result;
+                    httpRequest.send('patch_list='+this.result);
+                }
+            }
+            else
+            {
+                var olist = document.getElementById('log_list');
+                httpRequest.send('patch_list='+olist.value);
+            }
+
+        }
+
+        //获取ajax句柄
+        function getXmlHttpRequest()
+        {
+            var xmlHttpRequest = null;
+            try
+            {
+                xmlHttpRequest = new XMLHttpRequest();
+            }
+            catch(e)
+            {
+                try
+                {
+                    xmlHttpRequest=new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch(e)
+                {
+                    xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            }
+            return xmlHttpRequest;
+        }
+
+        function importFile1()
+        {
+            var selectedFile = document.getElementById("files").files[0];//获取读取的File对象
+            var name = selectedFile.name;//读取选中文件的文件名
+            var size = selectedFile.size;//读取选中文件的大小
+            console.log("文件名:" + name + "大小：" + size);
+
+            var reader = new FileReader();//这里是核心！！！读取操作就是由它完成的。
+            reader.readAsText(selectedFile,"gb2312");//读取文件的内容
+
+            reader.onload = function () {
+                //alert(this.result);
+                document.getElementById('data').value = this.result;
+            }
+        }
+
+        window.onload = function(){
+            var oBtnSearch = document.getElementById('search');
+            oBtnSearch.onclick = function(){
+                importFile(false);
+            }
+
+            var oLeftDiv = document.getElementById('left_div');
+            var oLogArea = document.getElementById('log_list');
+            var oFileArea = document.getElementById('file_list');
+            var oLine = document.getElementById('line');
+            var oSearch = document.getElementById('search');
+            oLogArea.style.height = oFileArea.style.height = 650+'px';
+            oLine.style.height = 680+'px';
+            oLine.style.marginLeft = oLeftDiv.offsetWidth + 10 + 'px';
+            oSearch.style.marginTop = (670)+'px';
+            oSearch.style.marginLeft = oLogArea.offsetWidth - 150 + 'px';
+        }
+        window.onresize = function(){
+            var oLeftDiv = document.getElementById('left_div');
+            var oLogArea = document.getElementById('log_list');
+            var oSearch = document.getElementById('search');
+            var oLine = document.getElementById('line');
+            oLine.style.marginLeft = oLeftDiv.offsetWidth + 10 + 'px';
+            oSearch.style.marginLeft = oLogArea.offsetWidth - 150 + 'px';
+        }
+    </script>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        table{margin:auto;border-collapse:collapse;border-spacing:0;border-left:1px solid #888;border-top:1px solid #888;background:#f5f5dc;}
+        th,td{border-right:1px solid #888;border-bottom:1px solid #888;padding:5px 15px;}
+        th{font-weight:bold;background:#ccc;}
+        #pane_div{position: relative;}
+        #left_div{width: 43%; float: left;position: relative; margin-right: 2.5%;}
+        #right_div{margin-top:30px;width: 53%;float:left;position: relative;margin-left: 0.5%;}
+        #desc{width: 20px;line-height: 24px;float:left;color:green;}
+        #log_list{width:95%;float:left;position: absolute;}
+        #file_list{width:95%;float:left;position: absolute;}
+        #line{width:1px;float: left;position: absolute;}
+        #search{position: absolute;width:100px;height:40px;margin:auto;}
+        #files{height: 30px; width:200px;}
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><h2>功能说明：</h2></td>
+            <td>查询升级包中所有文件列表</td>
+        </tr>
+        <tr>
+            <td rowspan="2"><h2>操作说明：</h2></td>
+            <td>1）通过导入升级包日志文件查看</td>
+        </tr>
+        <tr>
+            <td>2）通过粘贴升级包列表查看</td>
+        </tr>
+    </table>
+    <hr/>
+    <div id="pane_div">
+        <div id="left_div">
+            <input type="file" accept="text/plain,.log"  id="files"  onchange="importFile(true);">
+            <br/>
+            <div id="desc">请将升级包列表复制到下面的文本框中</div>
+            <textarea id="log_list" ></textarea>
+            <input type="button" value="查询" id="search"/>
+        </div>
+        <hr id="line"/>
+        <div id="right_div">
+            <div id="desc">升级包文件列表</div>
+            <textarea id="file_list"></textarea>
+        </div>
+    </div>
+</body>
+</html>
