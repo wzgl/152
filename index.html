@@ -1,0 +1,379 @@
+<html lang="en">
+    <head>
+        <meta charset="gbk">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+        <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+        <meta http-equiv="expires" content="0">
+        <title>
+            盈高科技研发内部项目管理系统
+        </title>
+        <style type="text/css">
+        *{margin:0;padding: 0;}
+        body{background-color: #E0EEEE;}
+        li{list-style: none;}
+        a:link{text-decoration:none;}
+        .no-use{height: 10px;}
+        .body-div{font-family:"微软雅黑";width:98%;text-align: center;margin:0 2%;background-color: #E0EEEE;padding-bottom:20px;}
+
+        .tool-list li{float:left;height: 120px;padding: 10px 0;width: 300px;margin: 1px;background-color:#ECF6F6; cursor:pointer; }
+        .tool-list li h3{font-size: 24px;line-height: 2;  font-weight:normal; color:#489D9D;display:block; margin-top: 35px;}
+        .tool-list li:hover {
+          background-color:#06D995;
+        }
+        .desc{font-size:12px;line-height: 1.2;color:#999;margin-top: 20px;}
+
+        /**顶部提示-start**/
+        .case-index-content-box {
+            position: fixed;
+            z-index: 1989;
+            width: 890px;
+            margin:50px auto;
+            left:0;
+            right:0;
+        }
+
+        .case-index-content {
+             width: 890px;
+             margin: 0 auto;
+        }
+        .clearfix:after{
+			  content: "020"; 
+			  display: block; 
+			  height: 0; 
+			  clear: both; 
+			  visibility: hidden;  
+          }
+
+        .clearfix {
+          zoom: 1; 
+          }
+        .service-list .service-list-item {
+			float: left;
+			width: 890px;
+			margin-right: 13px;
+			background: #fff;
+			margin-top:5px;
+        }
+        .case-index-content-box-ss{
+            position: fixed;
+            z-index: 1989;
+             width: 50px;
+            height:50px;
+            margin:0px auto;
+            overflow:hidden;
+            left:0;
+            right:0;
+            transition: all 0.9s;
+        }
+
+        .service-title {
+          height: 50px;
+        }
+
+        .service-bj1 .service-title {
+           background-color:#fe856a;
+        }
+        .service-title h3 {
+            font-size: 23px;
+            text-align: center;
+            padding-top: 2px;
+            color: #fff;
+            font-weight: bold;
+            float: left;
+            width:20px;
+        }
+        .server_title2 {
+            float: left;
+            background-color:#fe856a;
+            height: 132px;
+        }
+        .server_title2 h3{
+            font-size: 23px;
+            text-align: center;
+            padding-top: 2px;
+            color: #fff;
+            font-weight: bold;
+            margin-top: 20px;
+
+        }
+        .server_title3 {
+            float: left;
+            background-color:#fe856a;
+            height: 132px;
+            width:50px;
+        }
+        .server_title3 h3{
+            font-size: 20px;
+           /* text-align: center; */
+            padding-top: 0px;
+            color: #fff;
+            font-weight: bold;
+            margin-top: 20px;
+
+        }
+        .service-content {
+			border: 1px solid #E7E9EC;
+			border-top: 0;
+        }
+
+        .service-content-list {
+			margin-left: 58px;
+			margin-top: 15px;
+			padding:1px;
+        }
+
+        .service-content-list li {
+			margin-bottom: 18px;
+			position: relative;
+        }
+
+        .service-content-list li:before {
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: #C1C5CB;
+			content: "";
+			position: absolute;
+			left: -16px;
+			top: 7px;
+        }
+
+        .service-content-list li h4 {
+			font-size: 23px;
+			color: #616366;
+			font-weight: 700;
+			/*margin-bottom: 3px;*/
+			line-height: 20px;
+        }
+        .service-content-list li h4  span{
+            font-size: 23px;
+            color: #d84e4e;
+            /*margin-top:2px;*/
+        }
+        .service-content-list li p {
+			font-size: 23px;
+			color: #d84e4e;
+			margin-top:7px;
+        }
+
+        .service-list {
+           margin-right: -13px;
+        }
+        .box{
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            display: none;
+            z-index: 5;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.52) none repeat scroll 0% 0%;
+            opacity: 1;
+        }
+        /**顶部提示-end**/
+        </style>
+        <script type="text/javascript">
+          window.onload = function(){
+            var oUl = document.getElementsByTagName('li');
+            for(var i=0; i<oUl.length; i++)
+            {
+        /*
+                oUl[i].onmouseover = function(){
+                    this.style.cursor = 'pointer';
+                    //this.style.backgroundColor = '#cf0';
+                    this.style.backgroundColor = '#06D995';
+                }
+                oUl[i].onmouseout = function(){
+                    this.style.backgroundColor = '#E0EEEE';
+                }
+        */
+                oUl[i].onclick = function(){
+                    window.open(this.children[0].children[0].href.toString());
+                }
+            }
+         }
+        </script>
+    </head>
+    <body scroll="no">
+        <div class="box" id="box" style="display: none;"></div>
+        <div class="case-index-content" id="case">
+            <ul class="service-list clearfix">
+                <li class="service-list-item service-bj1">
+                    <div class="server_title2" >
+                        <h3>
+                            &nbsp;&nbsp;重 点&nbsp;&nbsp;
+                        </h3>
+                        <h3>
+                            &nbsp;&nbsp;措 施&nbsp;&nbsp;
+                        </h3>
+                    </div>
+                    <div class="service-content" style="float: left;">
+                        <ul class="service-content-list">
+                            <li>
+                                <h4>
+                                    管理红线 : <span>禁止研发直接修改客户代码。</span>
+                                </h4>
+
+                            </li>
+                            <li>
+                                <h4>
+                                    代码规范 : <span>变量使用前必须进行合法性（判空\兼容等）判断。</span>
+                                </h4>
+                            </li>
+                            <li>
+                                <h4>
+                                    代码规范 : <span>所有调用需考虑执行超时和系统资源不足等情况。</span>
+                                </h4>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="float: clear;margin-top: 3px;margin-left: 5px; " >
+                        <h2>
+                            &nbsp;&nbsp;创 新 &nbsp;&nbsp;
+                        </h2>
+
+                        <h2>
+                            &nbsp;&nbsp;协 作&nbsp;&nbsp;
+                        </h2>
+                        <h2>
+                            &nbsp;&nbsp;务 实&nbsp;&nbsp;
+                        </h2>
+                        <h2>
+                            &nbsp;&nbsp;高 效&nbsp;&nbsp;
+                        </h2>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="no-use"></div>
+        <div class="body-div">
+            <ul class="tool-list">
+                <li>
+                    <h3>
+                        升级包列表<a href="webdata/newasmpublish/"></a>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        项目管理系统<a href="http://192.168.46.152:8081/www/index.php?m=bug&amp;f=browse&amp;productID=6"></a>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        ASM模块负责人<a href=""></a>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        SQL语句合并系统<a href="https://172.22.46.54/dev/s.php"></a>
+                    </h3>
+                    <div class="desc">
+                        研发专用
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        ASM对比工具<a href="asm_version_check"></a>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        测试服务<a href="http://192.168.46.241/"></a>
+                    </h3>
+                    <div class="desc">
+                       内部测试服务器
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        C/C++/PHP公共库手册<a href="http://172.22.46.153/"></a>
+                    </h3>
+                    <div class="desc"></div>
+                </li>
+                <li>
+                    <h3>
+                        论坛<a href="http://download.infogo.com.cn/"></a>
+                    </h3>
+                    <div class="desc">
+                        稳定sp包请到论坛下载
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        升级包文件列表查看工具<a href="webdata/importPathLog.html"></a>
+                    </h3>
+                    <div class="desc">
+                        用于查看升级包包含的文件列表
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        ASM故障分析平台<a href="http://192.168.46.113/"></a>
+                    </h3>
+                    <div class="desc">
+                        用于分析ASM的故障工具平台
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        ASM开发规范说明<a href="asm/"></a>
+                    </h3>
+                    <div class="desc">
+                        用于查阅ASM对应配置文件和目录规范说明
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        自动构建服务器<a href="http://172.22.1.1/"></a>
+                    </h3>
+                    <div class="desc">
+                        自动化制作ACMS/LVS的ISO, Jenkins服务器
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        每周发生了啥<a href="what_happened_every_week/"></a>
+                    </h3>
+                    <div class="desc">
+                        每天23:30更新
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        流程规范<a href="tech_process"></a>
+                    </h3>
+                    <div class="desc">
+                        ASM产品线相关流程规范
+                    </div>
+                </li>
+ 		<li>
+                    <h3>
+                        WIKI系统<a href="http://192.168.46.12/wiki/doku.php"></a>
+                    </h3>
+                    <div class="desc">
+                        研发内部文档
+                    </div>
+                </li>
+                <li>
+                    <h3>
+                        API文档管理系统<a href="http://172.22.46.55:8088"></a>
+                    </h3>
+                    <div class="desc">
+                        研发内部文档
+                    </div>
+                </li>
+            </ul>
+        </div><script type="text/javascript">
+        function slidehide(){
+                document.getElementById("case").className="case-index-content";
+            }
+            function slidewidth(){
+                document.getElementById("case").className="case-index-content-box-ss";
+                document.getElementById("box").style.display="none";
+                var t1 = window.setTimeout(slidehide,300);
+            }
+            // var t1 = window.setTimeout(slidewidth,1500);
+        </script>
+    </body>
+</html>
