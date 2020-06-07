@@ -10,7 +10,7 @@
 <TITLE>ASM补丁包信息</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=gbk">
 <script src="/_dir/ajax2.js"></script>
-<script src="/tp/js/jquery-1.6.4.min.js"></script>
+<script src="/_dir/jquery-1.6.4.min.js"></script>
 
 <style type="text/css">
 body{ font-size:14px;}
