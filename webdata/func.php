@@ -210,8 +210,9 @@ function checkLogin()
 function getpatchreadme($file, &$buguser, &$exename, &$fileobj)
 {
 	$ret = "";
-        if(filesize($file) > 104857600)
-            return $ret;
+	/* 超过250M不显示 */
+	if(filesize($file) > 262144000)
+		return $ret;
 	
 	if( (strstr($file, "ASMPatch") || strstr($file, "SMPPatch") ) && strstr($file, ".exe"))
 	{
@@ -375,48 +376,45 @@ function getpatchreadme($file, &$buguser, &$exename, &$fileobj)
 
 //获取文件目录列表,该方法返回数组
 function getDir($dir) {
-	$dirArray="";
-	if (false != ($handle = opendir ( $dir ))) 
+	$dirArray='';
+	if (false != ($handle = opendir ( $dir )))
 	{
-		
 		while ( false !== ($file = readdir ( $handle )) )
 		 {
 			//去掉"“.”、“..”以及带“.xxx”后缀的文件
-			if ($file != "." && $file != "..") 
+			if ($file != '.' && $file != '..')
 			{
-				$f="";
+				$f='';
 				
-				$f["path"] = $dir."/".$file;
-				$f["name"]=$file;
+				$f['path'] = $dir.'/'.$file;
+				$f['name']=$file;
 				
-				$f["md5Path"] = getMd5Name($file);
+				$f['md5Path'] = getMd5Name($file);
 				
-				$f["user"]="-";
-				$f["exename"]="-";
-				if(is_dir($dir."/".$file))
+				$f['user']='-';
+				$f['exename']='-';
+				if(is_dir($f['path']))
 				{
-					$f["isdir"]=true;
-					$f["desc"]="";
+					$f['isdir']=true;
+					$f['desc']='';
+					$f['ico'] = '/icons/folder.gif';
+					$f['size2']='-';
 				}
 				else
 				{
-					$f["isdir"]=false;
-					$f["desc"] = getpatchreadme($f["path"],$f["user"],$f["exename"], $f);
+					$f['isdir']=false;
+					$f['desc'] = getpatchreadme($f['path'],$f['user'],$f['exename'], $f);
+					$f['ico'] = '/icons/compressed.gif';
+					$f['size'] = filesize($f['path']);
+					$f['size2'] = byteFormat($f['size'] );
 				}
-				$f["link"] = urlencode($f["name"]);	
-				$f["ext"] = pathinfo($dir."/".$file, PATHINFO_EXTENSION);
-				$f["ico"] = "/icons/compressed.gif";
-				if($f["isdir"])
-					$f["ico"] = "/icons/folder.gif";
-				$f["size"] = filesize($dir."/".$file);
-				$f["size2"] = byteFormat($f["size"] );
-				if($f["isdir"])
-					$f["size2"]="-";
-				$f["etime"] = date ("Y-m-d H:i:s", filemtime($dir."/".$file));
-				
+				$f['link'] = urlencode($f['name']);
+				$f['ext'] = pathinfo($f['path'], PATHINFO_EXTENSION);
+				$f['etime'] = date ('Y-m-d H:i:s', filemtime($f['path']));
+
 				// luozh add date attribute to sort
 				$shortName = getShortName($file);
-				$makeDate = substr($shortName, 0, 8);
+				$makeDate = substr($shortName, 0, 13);
 				$f['date'] = $makeDate;
 				$dirArray[]=$f;
 			}
