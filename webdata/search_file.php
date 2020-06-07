@@ -136,12 +136,11 @@ $bIsAsc = $bIsAsc ? 0 : 1;
     </style>
     <script type="text/javascript">
         function showfilelist(id) {
-            var md5path = $('#' + "file_md5Path_" + id).val();
-
-            $("#listfile_dlg_if").attr("src", "/webdata/showfilelist.php?md5path=");
-            $('#main_dsc2').html($('#desc_' + id).text());
-            $("#listfile_dlg_if").attr("src", "/webdata/showfilelist.php?md5path=" + md5path);
+            $("#listfile_dlg_if").attr("src", "");
+            var md5path = $('#'+"file_md5Path_" + id).val();
+            $('#main_dsc2').html($('#desc_'+id).text());
             $('#listfile_dlg').bPopup();
+            $("#listfile_dlg_if").attr("src", "/webdata/showfilelist.php?md5path=" + md5path);
         }
 
         function showallfile() {
